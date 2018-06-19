@@ -7,13 +7,12 @@ import { HeaderComponent } from './shared/_components/header/header.component';
 import { SidebarComponent } from './shared/_components/sidebar/sidebar.component';
 import { DropdownDirective } from './shared/_directives/dropdown.directive';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
-import { AutologinPageComponent } from './autologin-page/autologin-page.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SystemRoutingModule
   ],
-  declarations: [MainPageComponent, SystemComponent, HeaderComponent, SidebarComponent, DropdownDirective, SettingsPageComponent, AutologinPageComponent]
+  declarations: [MainPageComponent, SystemComponent, HeaderComponent, SidebarComponent, DropdownDirective, SettingsPageComponent]
 })
 export class SystemModule { }
