@@ -33,7 +33,7 @@ mongoose
 if (process.env.NODE_ENV !== 'dev') {
   console.log(222)
   console.log(__dirname)
-  app.use('/', express.static('../dist'));
+  app.use('/', express.static(path.join(__dirname, '../dist/client')));
 }
 
 // Use Routes
@@ -51,7 +51,7 @@ if (process.env.NODE_ENV !== 'dev') {
   app.get('*', function(req, res) {
     console.log(12211)
     console.log(__dirname)
-    res.sendFile('../dist/index.html');
+    res.sendFile(path.join(__dirname, '../dist/client/index.html'));
   });
 }
 
