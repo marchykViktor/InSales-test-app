@@ -41,6 +41,7 @@ app.use('/api/app', appController);
 
 if (process.env.NODE_ENV !== 'dev') {
   app.get('*', function(req, res) {
+    console.log(123)
     res.sendFile(path.join(__dirname, '/dist/index.html'));
   });
 }
