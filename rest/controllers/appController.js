@@ -75,7 +75,7 @@ router.get('/install', (req, res) => {
                 err: err,
               });
             } else {
-              log.info(`Магазин id=${req.query.insales_id} Установлен`);
+              //log.info(`Магазин id=${req.query.insales_id} Установлен`);
               res.sendStatus(200);
             }
           });
@@ -97,7 +97,7 @@ router.get('/uninstall', (req, res) => {
       req.query.shop &&
       req.query.token &&
       req.query.insales_id) {
-    Apps.findOne({
+    User.findOne({
       insalesid: req.query.insales_id,
     }, (err, a) => {
       if (a.token === req.query.token) {

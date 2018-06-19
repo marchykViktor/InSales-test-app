@@ -4,6 +4,7 @@ var router    = express.Router();
 
 var bcrypt    = require('bcryptjs');
 var jwt       = require('jsonwebtoken');
+var moment    = require('moment');
 var keys      = require('../../config/keys');
 var passport  = require('passport');
 
@@ -13,7 +14,7 @@ var User = require('../models/User');
 // @route   GET /api/user/register
 // @desc    Register user
 // @access  Public
-/*router.post('/register', (req, res) => {
+router.post('/register', (req, res) => {
   User.findOne( {email: req.body.email} )
     .then(user => {
       if(user){
@@ -21,17 +22,22 @@ var User = require('../models/User');
       } else {
         User.find().sort([['_id', 'descending']]).limit(1).exec((err, userdata) => {
           if (err) throw err;
-
           var newUser = new User({
-            _id: userdata[0]._id+1,
-            name: req.body.name,
-            password: req.body.password,
-            email: req.body.email
+            insalesid  : req.body.name,
+            insalesurl : '',
+            token      : req.body.password,
+            name       : '',
+            email      : req.body.email,
+            phone      : '',
+            domain     : '',
+            created_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
+            updated_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
+            enabled    : true,
           });
 
           bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              newUser.password = hash;
+            bcrypt.hash(newUser.token, salt, (err, hash) => {
+              newUser.token = hash;
               newUser.save()
                 .then(user => res.json(user))
                 .catch(err => console.log(err));
@@ -40,7 +46,7 @@ var User = require('../models/User');
         });
       }
     });
-});*/
+});
 
 // @route   GET /api/user/login
 // @desc    Login user / Returning JWT
@@ -58,16 +64,20 @@ router.post('/login', (req, res) => {
         return res.status(404).json({email: 'User email not found'});
       };
 
+      console.log(user)
+
+      console.log(password + '----' + user.token)
       // Check password
-      bcrypt.compare(password, user.password)
+      bcrypt.compare(password, user.token)
         .then(isMatch => {
+          console.log(isMatch)
           if(isMatch) {
             // User matched
-            var payload = { id: user._id, name: user.name, email: user.email }; // create JWT payload
+            var payload = { insalesid: user.insalesid, store: user.insalesurl, email: user.email }; // create JWT payload
 
             jwt.sign(payload,
                      keys.secretOrKey,
-                     { expiresIn: 3600 },
+                     { expiresIn: 36000 },
                      (err, token) => {
                         res.json({
                           success: true,

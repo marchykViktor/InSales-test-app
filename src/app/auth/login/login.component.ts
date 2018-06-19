@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
+    console.log(this.f.email.value + "  " + this.f.password.value)
     this.api.login(this.f.email.value, this.f.password.value)
       .subscribe(
         data => {
