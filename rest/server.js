@@ -29,10 +29,10 @@ mongoose
   .connect(db)
   .then(() => console.log('Mongo is conect'))
   .catch((err) => console.log(err));
-/*
+
 if (process.env.NODE_ENV !== 'dev') {
   app.use('/', express.static(path.join(__dirname, '../dist/client')));
-}*/
+}
 
 // Use Routes
 var profileController = require('./controllers/profileController');
@@ -43,12 +43,12 @@ app.use('/api/user', userController);
 
 var appController = require('./controllers/appController');
 app.use('/api/app', appController);
-/*
+
 if (process.env.NODE_ENV !== 'dev') {
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, '../dist/client/index.html'));
   });
-}*/
+}
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Server is running ' + process.env.PORT);
