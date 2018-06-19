@@ -3,7 +3,8 @@ var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
 var passport    = require('passport');
-var cors        = require('cors')
+var cors        = require('cors');
+var path        = require('path');
 
 var app         = express();
 
