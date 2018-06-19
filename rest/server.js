@@ -39,6 +39,13 @@ app.use('/api/user', userController);
 var appController = require('./controllers/appController');
 app.use('/api/app', appController);
 
+if (process.env.NODE_ENV !== 'dev') {
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
+  });
+}
+
 app.listen(process.env.PORT || 3000, () => {
-  console.log('Server is running'); 
+  console.log('Server is running');
+  console.log(process.env.NODE_ENV);  
 });
