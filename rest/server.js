@@ -29,6 +29,11 @@ mongoose
   .then(() => console.log('Mongo is conect'))
   .catch((err) => console.log(err));
 
+if (process.env.NODE_ENV !== 'dev') {
+  console.log(222)
+  app.use('/', express.static(path.join(__dirname, './dist')));
+}
+
 // Use Routes
 var profileController = require('./controllers/profileController');
 app.use('/api/profile', profileController);
@@ -40,6 +45,7 @@ var appController = require('./controllers/appController');
 app.use('/api/app', appController);
 
 if (process.env.NODE_ENV !== 'dev') {
+  console.log(222)
   app.get('*', function(req, res) {
     console.log(123)
     res.sendFile(path.join(__dirname, '/dist/index.html'));
