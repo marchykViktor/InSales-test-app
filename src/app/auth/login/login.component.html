@@ -1,0 +1,14 @@
+<form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form login-form">
+  <div class="form-group">
+    <input placeholder="email" type="email" class="login-form__input" formControlName="email">
+  </div>
+  <div class="form-group">
+    <input placeholder="password" type="password" class="login-form__input" formControlName="password">
+  </div>
+  <div class="form-group">
+    <a routerLink="/registration" class="auth-form__route">Зарегистрироваться</a>
+    <button type="submit" class="login-form__submit">
+      <i class="icon ion-ios-arrow-round-forward"></i>
+    </button>
+  </div>
+</form>

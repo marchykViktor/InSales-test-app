@@ -1,0 +1,14 @@
+.login-form {
+  &__submit {
+    background: orange;
+    border: none;
+    color: #fff;
+    padding: 0 30px;
+    
+    i {
+      line-height: 46px;
+      height: 46px;
+      font-size: 38px;
+    }
+  }
+}
