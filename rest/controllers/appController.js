@@ -6,6 +6,7 @@ const crypto   = require('crypto');
 const moment   = require('moment');
 const hat      = require('hat');
 const jwt      = require('jsonwebtoken');
+const keys     = require('../../config/keys');
 
 
 // Load user model
