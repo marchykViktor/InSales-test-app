@@ -4,6 +4,7 @@ const router = express.Router();
 
 const crypto   = require('crypto');
 const moment   = require('moment');
+const hat      = require('hat');
 
 
 // Load user model
@@ -157,7 +158,7 @@ router.get('/autologin', (req, res) => {
       }
     });
   } else {
-    const insid = req.session.insalesid || req.query.insales_id;
+    const insid = req.query.insales_id;
     //log.info(`Магазин id=${insid} Попытка входа магазина`);
     if ((req.query.insales_id &&
          (req.query.insales_id !== '')) ||
@@ -173,7 +174,7 @@ router.get('/autologin', (req, res) => {
           });
         } else {
           if (app.enabled === true) {
-            if (req.session.insalesid) {
+            if (false) {
               console.log(req.session);
             } else {
               //log.info(`Авторизация ${req.query.insales_id}`);
