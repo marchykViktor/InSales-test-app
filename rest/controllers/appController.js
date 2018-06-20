@@ -146,14 +146,12 @@ router.get('/autologin', (req, res) => {
         });
       } else {
         if (a) {
+          console.log(a)
           //log.info(`Магазин id=${a.insalesid} Создаём сессию и перебрасываем на главную`);
-          req.session.insalesid = a.insalesid;
           res.redirect('/');
         } else {
           //log.warn(`Ошибка автологина. Неправильный token при переходе из insales`);
-          res.render('block', {
-            msg: 'Ошибка автологина',
-          });
+          console.log('Ошибка автологина');
         }
       }
     });
@@ -175,13 +173,14 @@ router.get('/autologin', (req, res) => {
         } else {
           if (app.enabled === true) {
             if (false) {
-              console.log(req.session);
+              res.redirect('/');
             } else {
               //log.info(`Авторизация ${req.query.insales_id}`);
               const id = hat();
               app.autologin = crypto.createHash('md5')
                 .update(id + app.token)
                 .digest('hex');
+              console.log(app.autologin);
               app.save(err => {
                 if (err) {
                   errorNotify({
