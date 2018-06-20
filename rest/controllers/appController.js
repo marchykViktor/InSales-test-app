@@ -13,6 +13,7 @@ const User = require('../models/User');
 // @desc    Instal application
 // @access  Public
 router.get('/install', (req, res) => {
+  console.log(req.query)
   if ((req.query.shop !== '') &&
       (req.query.token !== '') &&
       (req.query.insales_id !== '') &&
@@ -22,7 +23,6 @@ router.get('/install', (req, res) => {
     User.findOne({
       insalesid: req.query.insales_id,
     }, (err, a) => {
-      console.log(a)
       if (err) {
         errorNotify({
           id: req.query.insales_id,
@@ -128,11 +128,80 @@ router.get('/uninstall', (req, res) => {
   }
 });
 
-// @route   GET /api/app/reg
-// @desc    reg
+// @route   GET /api/app/autologin
+// @desc    Auto user authorization
 // @access  Public
-router.get('/reg', (req, res) => {
-  res.send(req);
+router.get('/autologin', (req, res) => {
+  console.log(req.query)
+  if (req.query.token && (req.query.token !== '')) {
+    User.findOne({
+      autologin: req.query.token,
+    }, (err, a) => {
+      if (err) {
+        errorNotify({
+          id: req.query.insales_id,
+          msg: 'Error when get shop info from mongodb',
+          err: err,
+        });
+      } else {
+        if (a) {
+          //log.info(`Магазин id=${a.insalesid} Создаём сессию и перебрасываем на главную`);
+          req.session.insalesid = a.insalesid;
+          res.redirect('/');
+        } else {
+          //log.warn(`Ошибка автологина. Неправильный token при переходе из insales`);
+          res.render('block', {
+            msg: 'Ошибка автологина',
+          });
+        }
+      }
+    });
+  } else {
+    const insid = req.session.insalesid || req.query.insales_id;
+    //log.info(`Магазин id=${insid} Попытка входа магазина`);
+    if ((req.query.insales_id &&
+         (req.query.insales_id !== '')) ||
+        req.session.insalesid !== undefined) {
+      User.findOne({
+        insalesid: insid,
+      }, (err, app) => {
+        if (err) {
+          errorNotify({
+            id: req.query.insales_id,
+            msg: 'Error when get shop info from mongodb',
+            err: err,
+          });
+        } else {
+          if (app.enabled === true) {
+            if (req.session.insalesid) {
+              console.log(req.session);
+            } else {
+              //log.info(`Авторизация ${req.query.insales_id}`);
+              const id = hat();
+              app.autologin = crypto.createHash('md5')
+                .update(id + app.token)
+                .digest('hex');
+              app.save(err => {
+                if (err) {
+                  errorNotify({
+                    id: req.query.insales_id,
+                    msg: 'Error when save autologin token',
+                    err: err,
+                  });
+                } else {
+                  res.redirect(`http://${app.insalesurl}/admin/applications/${process.env.insalesid}/login?token=${id}&login=http://225231-vds-mv2822811.gmhost.pp.ua:3000/api/app/autologin`);
+                }
+              });
+            }
+          } else {
+            console.log('Приложение не установлено для данного магазина');
+          }
+        }
+      });
+    } else {
+      console.log('Вход возможен только из панели администратора insales.ru <span class="uk-icon-long-arrow-right"></span> приложения <span class="uk-icon-long-arrow-right"></span> установленные <span class="uk-icon-long-arrow-right"></span> войти');
+    }
+  }
 });
 
 module.exports = router;

@@ -1,12 +1,12 @@
 {
-  "name": "InSales-autoupdator",
+  "name": "insales-autoupdator",
   "version": "1.0.0",
   "description": "",
   "main": "node ./rest/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ng serve",
-    "start": "set NODE_ENV=dev && nodemon ./rest/server.js"
+    "start": "set NODE_ENV=dev && set insalesid=product-autoupdater && nodemon ./rest/server.js"
   },
   "author": "",
   "license": "",
