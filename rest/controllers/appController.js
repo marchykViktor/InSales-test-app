@@ -156,7 +156,7 @@ router.get('/autologin', (req, res) => {
             keys.secretOrKey,
             { expiresIn: 36000 },
             (err, token) => {
-              res.redirect(`/autologin?app-token=${token}`);
+              res.redirect(`/autologin?token=${token}`);
             }
           );
           
