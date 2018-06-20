@@ -12,9 +12,8 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
       console.log(3)
-      User.findOne( {email: jwt_payload.email} )
+      User.findOne( {insalesid: jwt_payload.insalesid} )
         .then(user => {
-          console.log(121212212222)
           if (user) {
             return done(null, user);
           }
