@@ -35,8 +35,8 @@ if (process.env.NODE_ENV !== 'dev') {
 }
 
 // Use Routes
-var profileController = require('./controllers/profileController');
-app.use('/api/profile', profileController);
+var settingsController = require('./controllers/settingsController');
+app.use('/api/settings', settingsController);
 
 var userController = require('./controllers/userController');
 app.use('/api/user', userController);

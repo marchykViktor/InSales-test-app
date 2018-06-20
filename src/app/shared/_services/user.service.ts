@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { User } from '../_models/User';
@@ -24,7 +23,7 @@ export class UserService {
   };
 
   getUser() {
-    return this.http.get<any>('http://localhost:3000/api/user/current')
+    return this.http.get<any>('/api/user/current')
       .pipe(map((res: any) => {
         if (res) {
           return res;

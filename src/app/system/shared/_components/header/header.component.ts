@@ -20,26 +20,6 @@ export class HeaderComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.getUser();
-  };
-
-  private getUser(){
-    this.userService.getUser()
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data){
-            this.user = data;
-          }
-        },
-        error => {
-          console.log(error);
-        });
-  };
-
-  private onLogout(){
-    this.authService.logout()
-    this.router.navigate(['/login']);
   };
 
 }
