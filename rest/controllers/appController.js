@@ -5,6 +5,7 @@ const router = express.Router();
 const crypto   = require('crypto');
 const moment   = require('moment');
 const hat      = require('hat');
+const jwt      = require('jsonwebtoken');
 
 
 // Load user model
@@ -136,7 +137,7 @@ router.get('/autologin', (req, res) => {
   console.log(req.query)
   if (req.query.token && (req.query.token !== '')) {
     User.findOne({
-      autologin: req.query.token,
+      email: req.query.email,
     }, (err, a) => {
       if (err) {
         errorNotify({
@@ -148,7 +149,16 @@ router.get('/autologin', (req, res) => {
         if (a) {
           console.log(a)
           //log.info(`Магазин id=${a.insalesid} Создаём сессию и перебрасываем на главную`);
-          res.redirect('/');
+          const payload = { insalesid: a.insalesid, store: a.insalesurl, email: a.email };
+
+          jwt.sign(payload,
+            keys.secretOrKey,
+            { expiresIn: 36000 },
+            (err, token) => {
+              res.redirect(`/autologin?app-token=${token}`);
+            }
+          );
+          
         } else {
           //log.warn(`Ошибка автологина. Неправильный token при переходе из insales`);
           console.log('Ошибка автологина');
@@ -181,7 +191,8 @@ router.get('/autologin', (req, res) => {
               app.autologin = crypto.createHash('md5')
                 .update(id + app.token)
                 .digest('hex');
-              console.log(app.autologin);
+              app.email = req.query.email;
+
               app.save(err => {
                 if (err) {
                   errorNotify({
