@@ -152,6 +152,7 @@ router.get('/autologin', (req, res) => {
         } else {
           //log.warn(`Ошибка автологина. Неправильный token при переходе из insales`);
           console.log('Ошибка автологина');
+          res.send('asdsadsa');
         }
       }
     });
@@ -189,7 +190,7 @@ router.get('/autologin', (req, res) => {
                     err: err,
                   });
                 } else {
-                  res.redirect(`http://${app.insalesurl}/admin/applications/${process.env.insalesid}/login?token=${app.autologin}&login=http://225231-vds-mv2822811.gmhost.pp.ua:3000/api/app/autologin`);
+                  res.redirect(`http://${app.insalesurl}/admin/applications/${process.env.insalesid}/login?token=${id}&login=http://225231-vds-mv2822811.gmhost.pp.ua:3000/api/app/autologin`);
                 }
               });
             }
