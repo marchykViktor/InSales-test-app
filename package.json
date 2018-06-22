@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ng serve",
-    "start": "set NODE_ENV=dev && set insalesid=product-autoupdater && set insalessecret=96c5cc62b88db89ddc7494bfd60c2a63 && nodemon ./rest/server.js"
+    "start": "set NODE_ENV=dev && set insalesid=product-autoupdater && nodemon ./rest/server.js"
   },
   "author": "",
   "license": "",
