@@ -51,13 +51,13 @@ function _deleteFile(filePath) {
   fs.unlinkSync(filePath);
 };
 
-function getFileArr(user, link, callback) {
+function getFileFirstLine(user, link, callback) {
   _downloadFile(user.insalesid, link)
     .then(function (result) {
-      callback({ data: _parseCsvFile(result) });
+      callback({ data: _parseCsvFile(result)[0].data[0] });
     }, function (err) {
       callback({ error: err });
     });
 };
 
-module.exports.getFileArr = getFileArr;
+module.exports.getFileFirstLine = getFileFirstLine;

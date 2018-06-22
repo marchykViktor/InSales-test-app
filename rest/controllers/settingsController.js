@@ -2,7 +2,7 @@
 const express   = require('express');
 const router    = express.Router();
 
-const file      = require('../models/File').getFileArr;
+const file      = require('../models/File').getFileFirstLine;
 const passport  = require('passport');
 
 // @route   POST /api/settings/csv
