@@ -33,6 +33,7 @@ router.post('/register', (req, res) => {
             created_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
             updated_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
             enabled    : true,
+            fields     : [],
           });
 
           bcrypt.genSalt(10, (err, salt) => {

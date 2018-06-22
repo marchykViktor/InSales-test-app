@@ -1,28 +1,30 @@
 // settings controller routes
-var express = require('express');
-var router = express.Router();
+const express   = require('express');
+const router    = express.Router();
 
-// get /api/settings/
-router.get('/',(req,res) => {
-  res.send('GET response');
-});
+const file      = require('../models/File').getFileArr;
+const passport  = require('passport');
 
-// post /api/settings/
-router.post('/setCsv',(req,res) => {
-  res.send('POST response');
-});
-
-// @route   PUT /api/settings/editCsv
+// @route   POST /api/settings/csv
 // @desc    Edit user CSV link
 // @access  Private
-router.put('/editCsv',(req,res) => {
-  console.log(req.body)
-  res.json({ state: 'PUT response' });
-});
+router.post('/csv', passport.authenticate('jwt', { session: false }), (req, res) => {
+  console.log(req.user);
+  if (req.body.link && 
+      req.body.link !== '' && 
+      req.user.insalesid > 0) {
 
-// delete /api/settings/
-router.delete('/',(req,res) => {
-  res.send('DELETE response');
+    file(req.user, req.body.link, function (response) {
+      if (response.error) {
+        res.json({ error: error });
+      } else {
+        res.json(response.data);
+      };
+    });
+
+  } else {
+    res.json({ error: 'Не указана ссылка' });
+  };
 });
 
 module.exports = router;

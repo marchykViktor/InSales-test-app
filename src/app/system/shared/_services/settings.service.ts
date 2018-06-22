@@ -10,7 +10,7 @@ export class SettingsService {
   constructor(private http: HttpClient) { }
 
   editLink(link: String) {
-    return this.http.put<any>('/api/settings/editCsv', { link: link })
+    return this.http.post<any>('/api/settings/csv', { link: link })
       .pipe(map((res: any) => {
         if (res) {
           return res;

@@ -11,6 +11,8 @@ const UserSchema = mongoose.Schema({
   phone      : String, // телефон клиента в международном формате
   created_at : Date, // дата создания записи
   updated_at : Date, // дата изменения записи
+  fields     : Array, // Поля из настройки файла
+  //settings   : Object, // Настройки пользователя
   enabled    : Boolean, // установлено или нет приложение для магазина
   isAdmin    : { type: Boolean, default: false }, // установлено для админа, задаётся непосредственно в БД
 });
