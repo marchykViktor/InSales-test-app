@@ -38,8 +38,6 @@ function _deleteFile(filePath) {
 };
 
 function getFileFirstLine(user, link, callback) {
-  var responseObject = {}
-
   const downloadOptions = {
     directory: './rest/uploads',
     filename: 'csv-' + user.insalesid + '.csv',
@@ -50,12 +48,10 @@ function getFileFirstLine(user, link, callback) {
     try {
       await download(link, downloadOptions.directory, { filename: downloadOptions.filename });
       await _validateCsv(downloadOptions.filePath)
-      const file = await _parseCsvFile(downloadOptions.filePath);
-      const token = await insales.token(user.token);
-      const collections = await insales.listCollection({ token: token, url: user.insalesurl })
+      const file        = await _parseCsvFile(downloadOptions.filePath);
+      const collections = await insales.listCollection({ token: user.token, url: user.insalesurl })
 
-      console.log(token);
-      callback({ data: { file: file[0].data[0], collections: collections } });
+      callback({ data: { file: file[0].data[0], collections: collections.data } });
     } catch (err) {
       callback({ error: err });
     }
