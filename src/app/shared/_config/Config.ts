@@ -1,3 +1,3 @@
 export class Config {
-  domen: 'http://localhost:3000/';
+  domen: 'http://localhost:80/';
 }

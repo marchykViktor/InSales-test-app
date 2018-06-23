@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   newUser(user: User) {
-    return this.http.post<any>('http://localhost:3000/api/user/register', { name: user.name, email: user.email, password: user.password })
+    return this.http.post<any>('http://localhost/api/user/register', { name: user.name, email: user.email, password: user.password })
       .pipe(map((res: any) => {
         if (res) {
           return true;

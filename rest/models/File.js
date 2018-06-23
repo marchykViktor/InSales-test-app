@@ -11,11 +11,17 @@ options.maxFileSize = 15728640;
 
 function _validateCsv(file) {
   return new Promise((resolve, reject) => {
+
+    // Получаем инфу файла
     fs.stat(file, (err, stats) => {
+
+      // Проверям есть ли он вообще
       if (err) {
         reject('Файл не найден');
         return;
       };
+
+      // Смотрим размер
       if (+stats.size > +options.maxFileSize) {
         _deleteFile(file);
         reject('Слишком большой размер файла');
@@ -37,18 +43,26 @@ function _deleteFile(filePath) {
   fs.unlinkSync(filePath);
 };
 
-function getFileFirstLine(user, link, callback) {
+function getFileArr(user, link, callback) {
   const downloadOptions = {
     directory: './rest/uploads',
     filename: 'csv-' + user.insalesid + '.csv',
     filePath: './rest/uploads/csv-' + user.insalesid + '.csv'
   };
 
+  // Строим ответ клиенту
   async function getResponse() {
     try {
+      // Скачиваем файл
       await download(link, downloadOptions.directory, { filename: downloadOptions.filename });
-      await _validateCsv(downloadOptions.filePath)
-      const file        = await _parseCsvFile(downloadOptions.filePath);
+
+      // Валидируем
+      await _validateCsv(downloadOptions.filePath);
+
+      // Парсим файл
+      const file = await _parseCsvFile(downloadOptions.filePath);
+
+      // Подгружаем инфу с магазина
       const collections = await insales.listCollection({ token: user.token, url: user.insalesurl })
 
       callback({ data: { file: file[0].data[0], collections: collections.data } });
@@ -58,7 +72,6 @@ function getFileFirstLine(user, link, callback) {
   };
 
   getResponse();
-
 };
 
-module.exports.getFileFirstLine = getFileFirstLine;
+module.exports.getFileFirstLine = getFileArr;
