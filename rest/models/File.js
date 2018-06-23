@@ -1,9 +1,7 @@
-"use strict";
-
 const xlsx = require('node-xlsx').default;
-const download = require('download-file');
+const download = require('download');
 const fs = require('fs');
-const insales  = require('insales')({
+const insales = require('../libs/insales')({
   id: process.env.insalesid,
   secret: process.env.insalessecret,
 });
@@ -11,34 +9,22 @@ const insales  = require('insales')({
 const options = {};
 options.maxFileSize = 15728640;
 
-const _downloadFile = (insalesid, url) => {
-  const downloadOptions = {
-    directory: './rest/uploads',
-    filename: 'csv-' + insalesid + '.csv'
-  };
-
+function _validateCsv(file) {
   return new Promise((resolve, reject) => {
-    download(url, downloadOptions, function (err) {
-      if (err) reject('Ошибка при загрузке файла');
-
-      const filePath = downloadOptions.directory + '/' + downloadOptions.filename;
-
-      fs.stat(filePath, (err, stats) => {
-        if (err) {
-          reject('Файл не найден');
-          return;
-        };
-        if (+stats.size > +options.maxFileSize) {
-          _deleteFile(filePath);
-          reject('Слишком большой размер файла');
-        } else {
-          resolve(downloadOptions.directory + '/' + downloadOptions.filename);
-        }
-      });
-
+    fs.stat(file, (err, stats) => {
+      if (err) {
+        reject('Файл не найден');
+        return;
+      };
+      if (+stats.size > +options.maxFileSize) {
+        _deleteFile(file);
+        reject('Слишком большой размер файла');
+      } else {
+        resolve();
+      }
     });
   });
-};
+}
 
 function _parseCsvFile(filePath) {
   const workSheetsFromBuffer = xlsx.parse(filePath);
@@ -52,12 +38,31 @@ function _deleteFile(filePath) {
 };
 
 function getFileFirstLine(user, link, callback) {
-  _downloadFile(user.insalesid, link)
-    .then(function (result) {
-      callback({ data: _parseCsvFile(result)[0].data[0] });
-    }, function (err) {
+  var responseObject = {}
+
+  const downloadOptions = {
+    directory: './rest/uploads',
+    filename: 'csv-' + user.insalesid + '.csv',
+    filePath: './rest/uploads/csv-' + user.insalesid + '.csv'
+  };
+
+  async function getResponse() {
+    try {
+      await download(link, downloadOptions.directory, { filename: downloadOptions.filename });
+      await _validateCsv(downloadOptions.filePath)
+      const file = await _parseCsvFile(downloadOptions.filePath);
+      const token = await insales.token(user.token);
+      const collections = await insales.listCollection({ token: token, url: user.insalesurl })
+
+      console.log(token);
+      callback({ data: { file: file[0].data[0], collections: collections } });
+    } catch (err) {
       callback({ error: err });
-    });
+    }
+  };
+
+  getResponse();
+
 };
 
 module.exports.getFileFirstLine = getFileFirstLine;

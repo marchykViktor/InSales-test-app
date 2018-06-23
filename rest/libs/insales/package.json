@@ -1,0 +1,111 @@
+{
+  "_from": "insales",
+  "_id": "insales@2.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-XxuFHVr8q4QX1beg1NmfG/53+qUuB5Zbx/v7PKIN8KBi9nJpwlMwjHUreJwg77Z+MiwGdpfQf/t9/YW5UzqyiQ==",
+  "_location": "/insales",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "insales",
+    "name": "insales",
+    "escapedName": "insales",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/insales/-/insales-2.0.1.tgz",
+  "_shasum": "79596e8e62fe6bd1a169ab959a48c001b2a6feac",
+  "_spec": "insales",
+  "_where": "F:\\job\\IS-products-autoupdate\\api",
+  "author": {
+    "name": "Sergey Ovechkin",
+    "email": "me@pomeo.me"
+  },
+  "bugs": {
+    "url": "https://github.com/pomeo/node-insales/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "deprecated": false,
+  "description": "Insales.ru module for node.js",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/register": "^7.0.0-beta.40",
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
+    "esdoc": "^1.0.4",
+    "esdoc-standard-plugin": "^1.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.0.1",
+    "xo": "^0.20.3"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/pomeo/node-insales",
+  "keywords": [
+    "insales",
+    "insales.ru",
+    "api"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "insales",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pomeo/node-insales.git"
+  },
+  "scripts": {
+    "compile": "babel --presets @babel/preset-env -d dist/ ./lib",
+    "docs": "esdoc -c esdoc.json",
+    "postpublish": "sed -i 's@ \"dist/index.js\"@ \"index.js\"@' package.json",
+    "prepublish": "sed -i 's@ \"index.js\"@ \"dist/index.js\"@' package.json && npm run compile",
+    "test": "xo && make test-once"
+  },
+  "version": "2.0.1",
+  "xo": {
+    "esnext": true,
+    "space": true,
+    "rules": {
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "always",
+          "named": "never",
+          "asyncArrow": "always"
+        }
+      ],
+      "curly": 0,
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "no-multi-spaces": 0,
+      "indent": 0,
+      "import/prefer-default-export": 0,
+      "camelcase": "warn"
+    },
+    "ignores": [
+      "test"
+    ],
+    "envs": [
+      "node",
+      "mocha"
+    ]
+  }
+}

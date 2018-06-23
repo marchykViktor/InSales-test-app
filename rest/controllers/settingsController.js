@@ -9,14 +9,13 @@ const passport  = require('passport');
 // @desc    Edit user CSV link
 // @access  Private
 router.post('/csv', passport.authenticate('jwt', { session: false }), (req, res) => {
-  console.log(req.user);
   if (req.body.link && 
       req.body.link !== '' && 
       req.user.insalesid > 0) {
 
     file(req.user, req.body.link, function (response) {
       if (response.error) {
-        res.json({ error: error });
+        res.json({ error: response.error });
       } else {
         res.json(response.data);
       };
