@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   newUser(user: User) {
-    return this.http.post<any>('http://localhost/api/user/register', { name: user.name, email: user.email, password: user.password })
+    return this.http.post<User>('api/user/register', { name: user.name, email: user.email, password: user.password })
       .pipe(map((res: any) => {
         if (res) {
           return true;
@@ -23,7 +23,7 @@ export class UserService {
   };
 
   getUser() {
-    return this.http.get<any>('/api/user/current')
+    return this.http.get<User>('/api/user/current')
       .pipe(map((res: any) => {
         if (res) {
           return res;

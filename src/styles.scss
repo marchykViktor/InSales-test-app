@@ -65,7 +65,7 @@ p {
 }
 
 .navbar-brand:hover {
-  color: #fff!important;
+  color: #39bc1a!important;
 }
 
 .navbar-dark {
@@ -83,6 +83,7 @@ p {
   width: 100%;
   padding: 0;
   background-color: #fff;
+  min-height: 100vh;
 }
 
 .huge {
@@ -163,7 +164,7 @@ li.nav-item-elements {
 .nav-link:hover,
 .nav-link:active,
 .nav-link:focus {
-  color: #fff!important;
+  color: #39bc1a!important;
 }
 
 ul.message-dropdown {
@@ -246,7 +247,7 @@ ul.alert-dropdown {
   border-radius: 0px;
 }
 
-.side-nav .list-group-item.active {
+.side-nav a.active {
   background: #080808;
 }
 
@@ -260,9 +261,10 @@ ul.alert-dropdown {
 
 .side-nav>li>a:hover,
 .side-nav>li>a:focus,
-.side-nav>li>a:active {
+.side-nav>li>a:active,
+.side-nav>li>a.active {
   text-decoration: none;
-  color: #fff!important;
+  color: #39bc1a!important;
 }
 
 .side-nav>li>ul {

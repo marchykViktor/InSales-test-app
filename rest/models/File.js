@@ -1,6 +1,8 @@
 const xlsx = require('node-xlsx').default;
 const download = require('download');
 const fs = require('fs');
+
+const importObj = require('./Import');
 const insales = require('../libs/insales')({
   id: process.env.insalesid,
   secret: process.env.insalessecret,
@@ -43,11 +45,16 @@ function _deleteFile(filePath) {
   fs.unlinkSync(filePath);
 };
 
-function getFileArr(user, link, callback) {
+function getImportArr(user, link, callback) {
   const downloadOptions = {
     directory: './rest/uploads',
     filename: 'csv-' + user.insalesid + '.csv',
     filePath: './rest/uploads/csv-' + user.insalesid + '.csv'
+  };
+
+  const access = {
+    token: user.token,
+    url: user.insalesurl
   };
 
   // Строим ответ клиенту
@@ -63,9 +70,18 @@ function getFileArr(user, link, callback) {
       const file = await _parseCsvFile(downloadOptions.filePath);
 
       // Подгружаем инфу с магазина
-      const collections = await insales.listCollection({ token: user.token, url: user.insalesurl })
+      const collections = await insales.listCollection(access);
+      const fields = await insales.getFields(access);
+      const options = await insales.getOptions(access);
+      const properties = await insales.getProperties(access);
 
-      callback({ data: { file: file[0].data[0], collections: collections.data } });
+      callback({ data: { file: file[0].data[0],
+        collections: collections.data,
+        other: importObj,
+        fields: fields.data,
+        options: options.data,
+        properties: properties.data
+      } });
     } catch (err) {
       callback({ error: err });
     }
@@ -74,4 +90,4 @@ function getFileArr(user, link, callback) {
   getResponse();
 };
 
-module.exports.getFileFirstLine = getFileArr;
+module.exports.getImportArr = getImportArr;

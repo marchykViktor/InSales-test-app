@@ -11,6 +11,7 @@ import { SettingsService } from '../shared/_services/settings.service';
 export class SettingsPageComponent implements OnInit {
 
   fileForm: FormGroup;
+  
 
   constructor(private api: SettingsService) { }
 

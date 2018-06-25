@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +19,11 @@ import { AuthGuard } from './shared/_guards/auth.guard';
     AuthModule,
     AppRoutingModule,
     HttpClientModule,
+    NgProgressModule.forRoot({
+      spinner: false,
+      color: '#39bc1a'
+    }),
+    NgProgressHttpModule
   ],
   providers: [
     AuthGuard,

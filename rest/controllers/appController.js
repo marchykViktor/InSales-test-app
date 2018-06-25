@@ -10,7 +10,7 @@ const keys     = require('../../config/keys');
 
 
 // Load user model
-const User = require('../models/User');
+const User = require('../models/User').model;
 
 // @route   GET /api/app/install
 // @desc    Instal application

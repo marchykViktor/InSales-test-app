@@ -1,15 +1,20 @@
 // user controller routes
-var express   = require('express');
-var router    = express.Router();
+const express   = require('express');
+const router    = express.Router();
 
-var bcrypt    = require('bcryptjs');
-var jwt       = require('jsonwebtoken');
-var moment    = require('moment');
-var keys      = require('../../config/keys');
-var passport  = require('passport');
+const bcrypt    = require('bcryptjs');
+const jwt       = require('jsonwebtoken');
+const moment    = require('moment');
+const keys      = require('../../config/keys');
+const passport  = require('passport');
+
+const insales = require('../libs/insales')({
+  id: process.env.insalesid,
+  secret: process.env.insalessecret,
+});
 
 // Load user model
-var User = require('../models/User');
+const User = require('../models/User');
 
 // @route   GET /api/user/register
 // @desc    Register user
@@ -34,6 +39,8 @@ router.post('/register', (req, res) => {
             updated_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
             enabled    : true,
             fields     : [],
+            fileUrl    : '',
+            password   : ''
           });
 
           bcrypt.genSalt(10, (err, salt) => {

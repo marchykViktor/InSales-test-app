@@ -31,6 +31,12 @@ var _coupon = require("./api/coupon");
 
 var _pricekind = require("./api/pricekind");
 
+var _fields = require("./api/fields");
+
+var _properties = require("./api/propeties");
+
+var _options = require("./api/options");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -243,6 +249,21 @@ function () {
     key: "editPriceKind",
     value: function editPriceKind(options) {
       return (0, _pricekind.editPriceKind)(options, this.id);
+    }
+  }, {
+    key: "getFields",
+    value: function getFields(options) {
+      return (0, _fields.getFields)(options, this.id);
+    }
+  }, {
+    key: "getProperties",
+    value: function getProperties(options) {
+      return (0, _properties.getProperties)(options, this.id);
+    }
+  }, {
+    key: "getOptions",
+    value: function getOptions(options) {
+      return (0, _options.getOptions)(options, this.id);
     }
   }]);
 
