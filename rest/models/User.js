@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema({
   created_at : Date, // дата создания записи
   updated_at : Date, // дата изменения записи
   fields     : Array, // Поля из настройки файла
-  settings   : { type: Boolean, default: { typeImport: 'quantity', intervals: '1', timeForImport: '12:00' } }, // Настройки пользователя
+  settings   : { type: Object, default: { typeImport: 'quantity', intervals: '1', timeForImport: '12:00' } }, // Настройки пользователя
   enabled    : Boolean, // установлено или нет приложение для магазина
   isAdmin    : { type: Boolean, default: false }, // установлено для админа, задаётся непосредственно в БД
 });
