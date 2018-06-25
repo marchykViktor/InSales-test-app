@@ -19,4 +19,4 @@ const UserSchema = mongoose.Schema({
   isAdmin    : { type: Boolean, default: false }, // установлено для админа, задаётся непосредственно в БД
 });
 
-module.exports.model = mongoose.model('UserModel', UserSchema);
+module.exports = mongoose.model('UserModel', UserSchema);

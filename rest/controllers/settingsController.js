@@ -5,7 +5,7 @@ const router = express.Router();
 const getImportArr = require('../models/File').getImportArr;
 const passport = require('passport');
 
-const User = require('../models/User').model;
+const User = require('../models/User');
 
 // @route   POST /api/settings/csv
 // @desc    Edit user CSV link
