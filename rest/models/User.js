@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const insales = require('../libs/insales')({
+  id: process.env.insalesid,
+  secret: process.env.insalessecret,
+});
+
 const UserSchema = mongoose.Schema({
   insalesid  : Number, // id магазина
   insalesurl : String, // урл магазина

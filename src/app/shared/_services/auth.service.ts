@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string) {
-    return this.http.post<any>('/api/user/login', { email: email, password: password })
+    return this.http.post<any>('http://localhost:3000/api/user/login', { email: email, password: password })
       .pipe(map((res: any) => {
         console.log(res)
         if (res && res.token) {

@@ -1,0 +1,22 @@
+<div class="col-lg-10 col-md-12">
+
+  <!-- Page Heading -->
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        Настройки выгрузки
+      </h1>
+    </div>
+  </div>
+
+  <mat-button-toggle-group #strategy="matButtonToggleGroup">
+    <mat-button-toggle value="left" checked>
+      Обновлять остатки
+    </mat-button-toggle>
+    <mat-button-toggle value="center" disabled>
+      Обновлять товары
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <div class="example-selected-value">Selected value: {{strategy.value}}</div>
+
+</div>

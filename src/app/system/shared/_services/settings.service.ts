@@ -10,7 +10,7 @@ export class SettingsService {
   constructor(private http: HttpClient) { }
 
   editLink(link: String) {
-    return this.http.post<any>('/api/settings/csv', { link: link })
+    return this.http.post<any>('http://localhost:3000/api/settings/csv', { link: link })
       .pipe(map((res: any) => {
         if (res) {
           return res;
@@ -19,4 +19,15 @@ export class SettingsService {
         }
       }));
   };
+
+  editFileSettings(file: any) {
+    return this.http.post<any>('http://localhost:3000/api/settings/csv-settings', { file: file })
+      .pipe(map((res: any) => {
+        if (res) {
+          return res;
+        } else {
+          return false;
+        }
+      }));
+  }
 }

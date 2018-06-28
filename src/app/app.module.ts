@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './shared/index';
 import { AuthGuard } from './shared/_guards/auth.guard';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { AuthGuard } from './shared/_guards/auth.guard';
       spinner: false,
       color: '#39bc1a'
     }),
-    NgProgressHttpModule
+    NgProgressHttpModule,
+    NoopAnimationsModule
   ],
   providers: [
     AuthGuard,

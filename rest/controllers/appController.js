@@ -41,12 +41,15 @@ router.get('/install', (req, res) => {
               .update(req.query.token + process.env.insalessecret)
               .digest('hex'),
             name       : '',
-            email      : '',
+            email      : req.body.email,
             phone      : '',
             domain     : '',
             created_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
             updated_at : moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ'),
             enabled    : true,
+            fields     : [],
+            fileUrl    : '',
+            password   : ''
           });
           app.save(err => {
             if (err) {

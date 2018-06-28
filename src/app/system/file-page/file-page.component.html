@@ -1,0 +1,43 @@
+<div class="col-lg-10 col-md-12">
+  <!-- Page Heading -->
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        Загрузка файла
+      </h1>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <form role="form" [formGroup]="fileForm" (ngSubmit)="onFileSubmit()">
+        <fieldset class="form-group">
+          <label>Ссылка на файл</label>
+          <input type="text" class="form-control" formControlName="link" [value]="user?.fileUrl">
+        </fieldset>
+        <button type="submit" mat-raised-button color="primary">{{ fileBtnText }}</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <form role="form" [formGroup]="fieldsForm" (ngSubmit)="onFieldsSubmit()">
+
+      <mat-form-field *ngFor="let select of importSettings; let i = index;" class="col-lg-12">
+        <mat-select placeholder="Столбец №{{ i }}" formControlName="field-{{i}}">
+          <mat-option>-- None --</mat-option>
+          <mat-optgroup *ngFor="let group of fields" [label]="group.type">
+            <mat-option *ngFor="let field of group.data" [value]="field.permalink">
+              {{ field.name }}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="col-lg-12" *ngIf="importSettings?.length > 0">
+        <button type="submit" mat-raised-button color="primary">Сохранить настройки</button>
+      </div>
+    </form>
+  </div>
+</div>
